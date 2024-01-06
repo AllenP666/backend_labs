@@ -1,17 +1,20 @@
 package ru.test.firsttest.service;
 
-import jakarta.persistence.Id;
 import ru.test.firsttest.DTO.ContentDTO;
-import ru.test.firsttest.DTO.IdDTO;
+import ru.test.firsttest.DTO.ResponseDTO;
 import ru.test.firsttest.DTO.StatusDTO;
+import ru.test.firsttest.Exception.DeleteTaskException;
+import ru.test.firsttest.Exception.SaveTaskException;
+import ru.test.firsttest.Exception.UpdateStatusException;
+import ru.test.firsttest.Exception.UpdateTaskException;
 import ru.test.firsttest.model.Task;
 
 import java.util.List;
 
 public interface TaskService {
     List<Task> findAllTasks();
-    Task saveTask(Task task);
-    ContentDTO updateTask(ContentDTO contentDTO);
-    StatusDTO updateStatus(StatusDTO statusDTO);
-    void deleteTask(Long id);
+    ResponseDTO saveTask(Task task) throws SaveTaskException;
+    ResponseDTO updateTask(ContentDTO contentDTO) throws UpdateTaskException;
+    ResponseDTO updateStatus(StatusDTO statusDTO) throws UpdateStatusException;
+    void deleteTask(Long id) throws DeleteTaskException;
 }
