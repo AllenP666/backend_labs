@@ -21,8 +21,7 @@ public class MyController {
     private final TaskService service;
 
     @GetMapping
-    public List<Task> findAllTasks()
-    {
+    public List<Task> findAllTasks() throws FindAllTasksException {
         return service.findAllTasks();
     }
 
@@ -42,7 +41,7 @@ public class MyController {
     }
 
     @DeleteMapping("delete_task/{id}")
-    public void deleteTask(@PathVariable Long id) throws DeleteTaskException {
-        service.deleteTask(id);
+    public ResponseDTO deleteTask(@PathVariable Long id) throws DeleteTaskException {
+        return service.deleteTask(id);
     }
 }

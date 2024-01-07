@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.test.firsttest.DTO.ContentDTO;
 import ru.test.firsttest.DTO.ResponseDTO;
 import ru.test.firsttest.DTO.StatusDTO;
-import ru.test.firsttest.Exception.DeleteTaskException;
-import ru.test.firsttest.Exception.SaveTaskException;
-import ru.test.firsttest.Exception.UpdateStatusException;
-import ru.test.firsttest.Exception.UpdateTaskException;
+import ru.test.firsttest.Exception.*;
 import ru.test.firsttest.model.Task;
 import ru.test.firsttest.repository.TaskRepository;
 import ru.test.firsttest.service.TaskService;
@@ -25,8 +22,15 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository repository;
 
     @Override
-    public List<Task> findAllTasks() {
-        return repository.findAll();
+    public List<Task> findAllTasks() throws FindAllTasksException {
+
+        List<Task> tasks = repository.findAll();
+
+        if (tasks.isEmpty()){
+            throw new FindAllTasksException("404", "Task list is empty");
+        }
+
+        return tasks;
     }
 
     @Override
@@ -82,12 +86,14 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public void deleteTask(Long id) throws DeleteTaskException {
+    public ResponseDTO deleteTask(Long id) throws DeleteTaskException {
         Task task = repository.findById(id).orElseThrow(()->
                 new DeleteTaskException("404", "Task with id: " + id + " does not exists"));
 
-        if (task != null){
-            repository.delete(task);
-        }
+        ResponseDTO response = new ResponseDTO();
+        response.setData(task);
+        response.setStatus("Task with id " + id + " was deleted");
+        repository.delete(task);
+        return response;
     }
 }
