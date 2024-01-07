@@ -6,9 +6,6 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 @Data
-@Entity
 public class IdDTO {
-    @Id
-    @GeneratedValue
     private Long id;
 }

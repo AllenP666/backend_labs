@@ -1,0 +1,1 @@
+insert into cats (id, name, breed, age) values (1, 'Barsik', 'Bengal', 2);

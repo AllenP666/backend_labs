@@ -5,12 +5,11 @@ import lombok.*;
 
 @Data
 @Entity
-@Table(name = "tasks")
-public class Task {
+@Table(name = "cats")
+public class Cat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String description;
-    private Boolean status;
+    private String name;
+    private String breed;
 }
